@@ -8,9 +8,14 @@ import shutil
 import threading
 
 app = Flask(__name__)
+
+# קונפיגורציה
 app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # הגבלת גודל קובץ ל-16MB
 app.config['ALLOWED_EXTENSIONS'] = {'pptx'}
+
+# הגדרת מפתח סודי (מסביבת ההפעלה או ערך ברירת מחדל)
+app.secret_key = os.environ.get('SECRET_KEY', 'dev_key_change_in_production')
 
 # יצירת תיקיות נדרשות אם לא קיימות
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
@@ -166,4 +171,8 @@ def get_available_fonts():
     return jsonify(common_fonts)
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000) 
+    # הפעלה בסביבה מקומית
+    port = int(os.environ.get('PORT', 5000))
+    app.run(debug=os.environ.get('FLASK_DEBUG', 'True') == 'True', 
+            host='0.0.0.0', 
+            port=port) 
