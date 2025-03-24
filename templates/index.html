@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>שינוי פונטים במצגות PowerPoint</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.rtl.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <header class="text-center my-5">
+        <h1>שינוי פונטים במצגות PowerPoint</h1>
+        <p class="lead">העלו מצגת PowerPoint ובחרו פונט חדש לכל הטקסט במצגת</p>
+      </header>
+
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <div class="card shadow">
+            <div class="card-body">
+              <!-- שלבי התהליך -->
+              <div class="steps mb-4">
+                <div class="step active" id="step1">
+                  <div class="step-circle">1</div>
+                  <div class="step-text">העלאת קובץ</div>
+                </div>
+                <div class="step-line"></div>
+                <div class="step" id="step2">
+                  <div class="step-circle">2</div>
+                  <div class="step-text">בחירת פונט</div>
+                </div>
+                <div class="step-line"></div>
+                <div class="step" id="step3">
+                  <div class="step-circle">3</div>
+                  <div class="step-text">הורדת קובץ</div>
+                </div>
+              </div>
+
+              <!-- שלב 1: העלאת קובץ -->
+              <div id="upload-section">
+                <div class="upload-area" id="drop-area">
+                  <form class="upload-form" id="upload-form">
+                    <input
+                      type="file"
+                      id="file-input"
+                      name="file"
+                      accept=".pptx"
+                      hidden
+                    />
+                    <label for="file-input" class="file-label">
+                      <div class="icon">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="48"
+                          height="48"
+                          fill="currentColor"
+                          class="bi bi-cloud-arrow-up"
+                          viewBox="0 0 16 16"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M7.646 5.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 6.707V10.5a.5.5 0 0 1-1 0V6.707L6.354 7.854a.5.5 0 1 1-.708-.708l2-2z"
+                          />
+                          <path
+                            d="M4.406 3.342A5.53 5.53 0 0 1 8 2c2.69 0 4.923 2 5.166 4.579C14.758 6.804 16 8.137 16 9.773 16 11.569 14.502 13 12.687 13H3.781C1.708 13 0 11.366 0 9.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383zm.653.757c-.757.653-1.153 1.44-1.153 2.056v.448l-.445.049C2.064 6.805 1 7.952 1 9.318 1 10.785 2.23 12 3.781 12h8.906C13.98 12 15 10.988 15 9.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 4.825 10.328 3 8 3a4.53 4.53 0 0 0-2.941 1.1z"
+                          />
+                        </svg>
+                      </div>
+                      <div class="text">
+                        גררו לכאן קובץ PowerPoint
+                        <br />או לחצו לבחירת קובץ
+                      </div>
+                    </label>
+                  </form>
+                  <div class="file-info" id="file-info" style="display: none">
+                    <div class="selected-file">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        fill="currentColor"
+                        class="bi bi-file-earmark-ppt text-danger"
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          d="M7 5.5a1 1 0 0 0-1 1V13a.5.5 0 0 0 1 0v-2h1.188a2.75 2.75 0 0 0 0-5.5H7zM8.188 10H7V6.5h1.188a1.75 1.75 0 1 1 0 3.5z"
+                        />
+                        <path
+                          d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z"
+                        />
+                      </svg>
+                      <span id="file-name"></span>
+                    </div>
+                    <button
+                      type="button"
+                      class="btn btn-outline-secondary btn-sm"
+                      id="change-file"
+                    >
+                      החלף קובץ
+                    </button>
+                  </div>
+                </div>
+                <div class="text-center mt-4">
+                  <button
+                    type="button"
+                    class="btn btn-primary btn-lg"
+                    id="continue-btn"
+                    disabled
+                  >
+                    המשך לבחירת פונט
+                  </button>
+                </div>
+              </div>
+
+              <!-- שלב 2: בחירת פונט -->
+              <div id="font-section" style="display: none">
+                <h3 class="mb-4">בחירת פונט חדש</h3>
+                <div class="mb-3">
+                  <label for="font-select" class="form-label">בחרו פונט:</label>
+                  <select class="form-select" id="font-select">
+                    <option value="" selected disabled>טוען פונטים...</option>
+                  </select>
+                </div>
+                <div class="font-preview p-3 border rounded mb-4">
+                  <p class="mb-1">תצוגה מקדימה:</p>
+                  <p id="font-preview-text" class="preview-text">
+                    זוהי דוגמה לטקסט בפונט שבחרתם ABC abc 123
+                  </p>
+                </div>
+                <div class="d-flex justify-content-between">
+                  <button
+                    type="button"
+                    class="btn btn-outline-secondary"
+                    id="back-to-upload"
+                  >
+                    חזרה
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    id="process-btn"
+                  >
+                    עבד את הקובץ
+                  </button>
+                </div>
+              </div>
+
+              <!-- שלב 3: הורדת קובץ -->
+              <div id="download-section" style="display: none">
+                <div class="text-center mb-4">
+                  <div class="success-icon mb-3">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="64"
+                      height="64"
+                      fill="currentColor"
+                      class="bi bi-check-circle-fill text-success"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"
+                      />
+                    </svg>
+                  </div>
+                  <h3 class="mb-2">המצגת מוכנה!</h3>
+                  <p>
+                    כל הטקסטים במצגת הוחלפו לפונט
+                    <span id="selected-font"></span>
+                  </p>
+                </div>
+                <div class="text-center">
+                  <a
+                    href="#"
+                    class="btn btn-success btn-lg mb-3"
+                    id="download-btn"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      class="bi bi-download me-2"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"
+                      />
+                      <path
+                        d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"
+                      />
+                    </svg>
+                    הורד את המצגת
+                  </a>
+                  <div>
+                    <button type="button" class="btn btn-link" id="start-over">
+                      התחל תהליך חדש
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- מסך טעינה -->
+              <div id="loading-section" style="display: none">
+                <div class="text-center p-4">
+                  <div class="spinner-border text-primary mb-3" role="status">
+                    <span class="visually-hidden">טוען...</span>
+                  </div>
+                  <h4 id="loading-message">מעבד את המצגת...</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer class="text-center text-muted mt-5 mb-3">
+        <p>&copy; 2025 מחליף הפונטים למצגות PowerPoint</p>
+      </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  </body>
+</html>

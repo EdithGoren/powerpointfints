@@ -1,0 +1,136 @@
+/* עיצוב כללי */
+body {
+  background-color: #f5f7fa;
+}
+
+.card {
+  border-radius: 1rem;
+  border: none;
+}
+
+.card-body {
+  padding: 2rem;
+}
+
+/* עיצוב שלבי התהליך */
+.steps {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #6c757d;
+  position: relative;
+  z-index: 1;
+  flex: 1;
+}
+
+.step.active {
+  color: #0d6efd;
+}
+
+.step.completed {
+  color: #198754;
+}
+
+.step-circle {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background-color: #e9ecef;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  border: 2px solid transparent;
+}
+
+.step.active .step-circle {
+  background-color: #cfe2ff;
+  border-color: #0d6efd;
+}
+
+.step.completed .step-circle {
+  background-color: #d1e7dd;
+  border-color: #198754;
+}
+
+.step-line {
+  flex: 1;
+  height: 2px;
+  background-color: #e9ecef;
+  z-index: 0;
+  margin: 0 0.5rem;
+}
+
+.step-line.active {
+  background-color: #0d6efd;
+}
+
+/* אזור העלאת קובץ */
+.upload-area {
+  border: 2px dashed #ced4da;
+  border-radius: 0.5rem;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s;
+}
+
+.upload-area.drag-over {
+  border-color: #0d6efd;
+  background-color: #e7f1ff;
+}
+
+.file-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  padding: 1rem;
+  color: #6c757d;
+}
+
+.file-label .icon {
+  margin-bottom: 1rem;
+}
+
+.file-label .text {
+  font-size: 1.1rem;
+}
+
+.file-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.selected-file {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+}
+
+/* תצוגה מקדימה של פונט */
+.font-preview {
+  background-color: #f8f9fa;
+}
+
+.preview-text {
+  font-size: 1.25rem;
+  line-height: 1.5;
+  margin: 0;
+  min-height: 3rem;
+}
+
+/* אנימציית טעינה */
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+}
